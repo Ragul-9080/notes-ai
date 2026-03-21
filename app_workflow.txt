@@ -1,0 +1,48 @@
+# Digital Notes Organizer - Full Application Workflow
+
+This document outlines the logical flow of the application from both a user and technical perspective.
+
+## 1. User Onboarding Flow
+1. **Landing/Auth**: User arrives at the login page.
+2. **Account Creation**: If new, the user signs up (handled via Supabase Auth).
+3. **Session Initiation**: Upon successful login, Supabase provides a JWT, and the user is redirected to the Dashboard.
+
+## 2. Note Management Workflow (CRUD)
+1. **Creation**:
+   - User clicks "New Note".
+   - A modal opens for Title, Category, and Content.
+   - On "Save", the Frontend sends a POST request to the Server or directly to Supabase.
+   - The UI updates optimistically or after confirmation.
+2. **Viewing**:
+   - The Dashboard fetches notes belonging to the `user_id`.
+   - Notes are rendered in a responsive grid.
+3. **Editing**:
+   - User clicks a note card.
+   - The editor modal opens with pre-filled data.
+   - On "Update", a PATCH/PUT request is sent.
+4. **Deletion**:
+   - User clicks the delete icon on a note.
+   - Confirmation prompt appears.
+   - Note is removed from the database and UI.
+
+## 3. Search and Organization Flow
+1. **Search**:
+   - User types in the search bar.
+   - The `app.js` (or React state) filters the local notes array based on title/content matches.
+2. **Filtering**:
+   - User selects a category (Personal, Work, Study) from the sidebar.
+   - The display updates to show only notes matching the selected category.
+
+## 4. AI Feature Workflow (Integration)
+1. **Trigger**: User clicks "AI Summary" or "Enhance Note".
+2. **Request**: Frontend sends the note content to the Server's `/api/ai/process` endpoint.
+3. **Processing**:
+   - Server receives the content.
+   - Server calls the **Google Gemini API** with a specific prompt.
+   - Gemini returns the processed text (summary/suggestions).
+4. **Response**: Server sends the AI result back to the Frontend.
+5. **Display**: Frontend shows the AI content in a preview or updates the note content.
+
+## 5. Security Workflow
+1. **Authentication**: Every request to Supabase is authenticated via the Anon Key + User Token.
+2. **RLS (Row Level Security)**: Supabase policies ensure that a user can ONLY read/write notes where `user_id` matches their authenticated ID.

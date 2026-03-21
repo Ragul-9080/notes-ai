@@ -1,0 +1,9 @@
+{
+  "title": "Photosynthesis Mindmap",
+  "content": "```reactflow\n{\n  \"nodes\": [\n    {\n      \"id\": \"1\",\n      \"data\": {\n        \"label\": \"Photosynthesis\"\n      },\n      \"type\": \"hub\"\n    },\n    {\n      \"id\": \"2\",\n      \"data\": {\n        \"label\": \"Light-Dependent Reactions\"\n      },\n      \"type\": \"branch\"\n    },\n    {\n      \"id\": \"3\",\n      \"data\": {\n        \"label\": \"Light-Independent Reactions\"\n      },\n      \"type\": \"branch\"\n    },\n    {\n      \"id\": \"4\",\n      \"data\": {\n        \"label\": \"Chlorophyll\"\n      },\n      \"type\": \"branch\"\n    },\n    {\n      \"id\": \"5\",\n      \"data\": {\n        \"label\": \"Glucose Production\"\n      },\n      \"type\": \"branch\"\n    },\n    {\n      \"id\": \"6\",\n      \"data\": {\n        \"label\": \"Oxygen Release\"\n      },\n      \"type\": \"branch\"\n    }\n  ],\n  \"edges\": [\n    {\n      \"id\": \"e1\",\n      \"source\": \"1\",\n      \"target\": \"2\"\n    },\n    {\n      \"id\": \"e2\",\n      \"source\": \"1\",\n      \"target\": \"3\"\n    },\n    {\n      \"id\": \"e3\",\n      \"source\": \"2\",\n      \"target\": \"4\"\n    },\n    {\n      \"id\": \"e4\",\n      \"source\": \"3\",\n      \"target\": \"5\"\n    },\n    {\n      \"id\": \"e5\",\n      \"source\": \"3\",\n      \"target\": \"6\"\n    }\n  ]\n}\n```",
+  "tags": [
+    "Photosynthesis",
+    "Mindmap",
+    "Biology"
+  ]
+}

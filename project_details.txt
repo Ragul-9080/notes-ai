@@ -1,0 +1,54 @@
+# Digital Notes Organizer - Project Details
+
+## Overview
+A full-stack application for creating and managing notes with AI-powered features. Built with a React frontend and an Node.js Express backend, integrated with Supabase for data storage and Google Gemini for AI capabilities.
+
+## Project Structure
+
+### 1. Client Module (Frontend)
+Location: `r:\2026\ragul-project\notes-organizer\client`
+Tech Stack: React, Vite, Tailwind CSS, Supabase JS, Axios, Lucide-React.
+
+#### Key Sub-modules:
+- **src/components**: Modular UI elements like Note Cards, Navbar, and Editor.
+- **src/pages**: Application views (Dashboard, Auth, etc.).
+- **src/lib**: Configuration for Supabase and API clients.
+- **src/hooks**: Custom React hooks for state and data fetching.
+
+#### Dependencies:
+- `@supabase/supabase-js`: Backend-as-a-Service integration.
+- `axios`: API communication with the server.
+- `lucide-react`: Icon system.
+- `react-router-dom`: Client-side routing.
+
+---
+
+### 2. Server Module (Backend)
+Location: `r:\2026\ragul-project\notes-organizer\server`
+Tech Stack: Node.js, Express, Supabase JS, Google Generative AI (Gemini).
+
+#### Key Sub-modules:
+- **controllers**:
+  - `notesController.js`: Logic for CRUD operations (Create, Read, Update, Delete) on notes.
+  - `aiController.js`: Integration with Google Gemini for AI-driven note summaries or suggestions.
+- **routes**:
+  - `notes.js`: API endpoints for note-related actions.
+  - `ai.js`: API endpoints for AI-powered features.
+- **middleware**: Request validation and security.
+- **lib**: Shared backend utilities.
+
+#### Dependencies:
+- `express`: Web framework.
+- `@google/generative-ai`: Google Gemini API client.
+- `cheerio`: Web scraping and content parsing.
+- `supabase-js`: Direct database interaction.
+- `dotenv`: Environment variable management.
+- `cors`: Cross-Origin Resource Sharing.
+
+---
+
+## Technical Details
+- **Database**: Supabase (PostgreSQL).
+- **AI Engine**: Google Gemini.
+- **Hosting/Runtime**: Node.js.
+- **Development Tools**: Vite for fast frontend building.
