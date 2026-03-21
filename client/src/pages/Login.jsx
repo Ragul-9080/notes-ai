@@ -35,7 +35,7 @@ const Login = () => {
     };
 
     return (
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh', width: '100%', flex: 1, background: 'var(--bg-primary)' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', padding: '40px 20px', width: '100%', flex: 1, background: 'var(--bg-primary)' }}>
             <div style={{ background: 'white', padding: '48px', borderRadius: '16px', boxShadow: 'var(--card-shadow)', width: '100%', maxWidth: '400px' }}>
                 <div className="logo" style={{ justifyContent: 'center', marginBottom: '32px' }}>📓 NoteShelf</div>
                 <h2 style={{ fontFamily: 'var(--font-heading)', textAlign: 'center', marginBottom: '8px' }}>Welcome Back</h2>

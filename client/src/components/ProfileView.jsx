@@ -6,6 +6,13 @@ const ProfileView = () => {
     const { user, logout } = useAuth();
     const [subscription, setSubscription] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+    useEffect(() => {
+        const handleResize = () => setIsMobile(window.innerWidth < 768);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     useEffect(() => {
         const fetchStatus = async () => {
@@ -69,7 +76,7 @@ const ProfileView = () => {
                         </div>
                     </div>
 
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '24px' }}>
                         <div>
                             <label style={{ fontSize: '11px', fontWeight: '700', color: '#999', display: 'block', marginBottom: '8px', letterSpacing: '0.5px' }}>FULL NAME</label>
                             <div style={{ padding: '12px', background: '#fcfcfc', border: '1px solid #eee', borderRadius: '10px', fontSize: '14px', color: 'var(--text-primary)' }}>

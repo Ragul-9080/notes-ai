@@ -22,17 +22,13 @@ const LandingPage = () => {
 
     return (
         <div className="landing-container" style={{ 
-            height: '100vh', 
+            minHeight: '100vh', 
             width: '100%',
             background: 'var(--bg-primary)', 
             color: 'var(--text-primary)', 
             fontFamily: 'var(--font-sans)',
             overflowX: 'hidden',
-            overflowY: 'auto',
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            zIndex: 9999
+            overflowY: 'auto'
         }}>
             {/* Navigation Bar */}
             <nav style={{ 
