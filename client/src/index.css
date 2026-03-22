@@ -167,6 +167,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+  flex-shrink: 0;
 }
 
 .title-group h1 {
@@ -313,8 +314,16 @@ body {
 .note-tags {
   display: flex;
   gap: 8px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
   margin-bottom: 16px;
+  padding-bottom: 4px; /* Space for shadows/borders */
+}
+
+.note-tags::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
 }
 
 .tag-badge {
@@ -324,6 +333,8 @@ body {
   border-radius: 20px;
   font-size: 12px;
   border: 1px solid var(--card-border);
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .note-date {
@@ -489,7 +500,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
+  z-index: 2500;
 }
 
 .modal-content {
@@ -508,6 +519,7 @@ body {
   display: flex;
   gap: 12px;
   flex-wrap: wrap;
+  flex-shrink: 0;
 }
 
 .filter-chip {

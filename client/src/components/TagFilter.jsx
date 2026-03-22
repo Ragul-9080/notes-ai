@@ -5,13 +5,14 @@ const tags = ['All', 'Important', 'Review', 'Formula', 'Definition', 'Example', 
 const TagFilter = ({ activeTag, onSelectTag }) => {
     return (
         <div className="filter-tags" style={{ 
-            padding: '12px 4px', 
+            padding: '8px 4px', 
             overflowX: 'auto', 
-            overflowY: 'hidden',
             display: 'flex', 
             flexWrap: 'nowrap', 
             gap: '8px',
-            WebkitOverflowScrolling: 'touch'
+            flexShrink: 0,
+            WebkitOverflowScrolling: 'touch',
+            scrollbarWidth: 'none'
         }}>
             {tags.map((tag) => (
                 <button
