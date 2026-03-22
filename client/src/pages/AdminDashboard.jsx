@@ -23,7 +23,8 @@ const AdminDashboard = () => {
         }
 
         try {
-            const response = await fetch('http://localhost:5000/api/admin/users', {
+            const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+            const response = await fetch(`${API_URL}/admin/users`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
 
@@ -55,7 +56,8 @@ const AdminDashboard = () => {
         setActionId(userId);
 
         try {
-            const response = await fetch('http://localhost:5000/api/admin/update-plan', {
+            const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+            const response = await fetch(`${API_URL}/admin/update-plan`, {
                 method: 'POST',
                 headers: { 
                     'Content-Type': 'application/json',
@@ -85,7 +87,8 @@ const AdminDashboard = () => {
         setActionId(userId);
 
         try {
-            const response = await fetch(`http://localhost:5000/api/admin/users/${userId}`, {
+            const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+            const response = await fetch(`${API_URL}/admin/users/${userId}`, {
                 method: 'DELETE',
                 headers: { 'Authorization': `Bearer ${token}` }
             });
