@@ -603,23 +603,23 @@ body {
 
 @media (max-width: 768px) {
   .note-modal-content {
-    padding: 24px !important;
-    width: 95% !important;
+    padding: 16px !important;
+    width: 100% !important;
   }
 
   .note-modal-title {
-    font-size: 24px;
-    margin-bottom: 12px;
+    font-size: 20px;
+    margin-bottom: 8px;
   }
 
   .note-textarea, .markdown-preview {
-    font-size: 16px;
-    min-height: 300px;
+    font-size: 15px;
+    min-height: 250px;
   }
 
   .note-modal-footer {
     flex-direction: column;
-    gap: 16px;
+    gap: 12px;
     align-items: flex-start;
   }
 
@@ -629,9 +629,27 @@ body {
 
   .note-modal-footer .btn-group {
     width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .mobile-action-buttons {
+    display: flex !important;
+    gap: 6px !important;
     justify-content: flex-start;
-    display: flex;
-    gap: 8px;
+  }
+
+  .mobile-action-buttons button {
+    flex: 0 1 auto !important;
+  }
+
+  .modal-overlay {
+    padding: 12px;
+    box-sizing: border-box;
+  }
+
+  .modal-content {
+    width: 100% !important;
   }
 
   .voice-controls {

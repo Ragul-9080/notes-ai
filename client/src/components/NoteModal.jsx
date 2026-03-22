@@ -304,8 +304,8 @@ const NoteModal = ({ note, isOpen, onClose, onSave, onDelete }) => {
     return (
         <div className="modal-overlay" onClick={onClose}>
             <div className="modal-content note-modal-content" onClick={(e) => e.stopPropagation()}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
-                    <div className="view-toggle">
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px', gap: '8px' }}>
+                    <div className="view-toggle" style={{ flex: '0 1 auto', minWidth: 0 }}>
                         <button 
                             className={view === 'edit' ? 'active' : ''} 
                             onClick={() => setView('edit')}
@@ -327,7 +327,7 @@ const NoteModal = ({ note, isOpen, onClose, onSave, onDelete }) => {
                             </button>
                         )}
                     </div>
-                    <div style={{ display: 'flex', gap: '12px' }}>
+                    <div style={{ display: 'flex', gap: '12px', flexShrink: 0 }}>
                         <button key="pin" onClick={() => setEditedNote(p => ({ ...p, is_pinned: !p.is_pinned }))} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '20px' }}>
                             {editedNote.is_pinned ? '📌' : '📍'}
                         </button>
@@ -391,44 +391,45 @@ const NoteModal = ({ note, isOpen, onClose, onSave, onDelete }) => {
                             + Tag
                         </button>
                     </div>
-                    <div className="btn-group" style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', alignItems: 'center' }}>
+                    <div className="btn-group" style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', alignItems: 'center', width: '100%' }}>
                         {note?.id && (
-                            <button onClick={() => onDelete(note.id)} style={{ color: '#ff6b6b', background: 'none', border: 'none', cursor: 'pointer', fontWeight: '500', fontSize: '13px' }}>Delete</button>
+                            <button onClick={() => onDelete(note.id)} style={{ color: '#ff6b6b', background: 'none', border: 'none', cursor: 'pointer', fontWeight: '500', fontSize: '13px', width: '100%', textAlign: 'left', padding: '4px 0' }}>Delete Note</button>
                         )}
 
                         {/* Download Buttons */}
-                        <button 
-                            onClick={handleDownloadPDF}
-                            title="Download as PDF"
-                            style={{ background: 'none', border: '1px solid #e17055', color: '#e17055', padding: '8px 12px', borderRadius: '10px', cursor: 'pointer', fontWeight: '500', fontSize: '12px', display: 'flex', alignItems: 'center', gap: '4px' }}
-                        >
-                            📥 PDF
-                        </button>
-                        <button 
-                            onClick={handleDownloadWord}
-                            title="Download as Word"
-                            style={{ background: 'none', border: '1px solid #0984e3', color: '#0984e3', padding: '8px 12px', borderRadius: '10px', cursor: 'pointer', fontWeight: '500', fontSize: '12px', display: 'flex', alignItems: 'center', gap: '4px' }}
-                        >
-                            📥 Word
-                        </button>
-                        {diagramJson && (
+                        <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', width: '100%' }} className="mobile-action-buttons">
                             <button 
-                                onClick={handleDownloadMindmapImage}
-                                title="Save Mindmap as Image"
-                                style={{ background: 'none', border: '1px solid #6c5ce7', color: '#6c5ce7', padding: '8px 12px', borderRadius: '10px', cursor: 'pointer', fontWeight: '500', fontSize: '12px', display: 'flex', alignItems: 'center', gap: '4px' }}
+                                onClick={handleDownloadPDF}
+                                title="Download as PDF"
+                                style={{ background: 'none', border: '1px solid #e17055', color: '#e17055', padding: '6px 10px', borderRadius: '8px', cursor: 'pointer', fontWeight: '500', fontSize: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px' }}
                             >
-                                🖼️ Mindmap
+                                📥 PDF
                             </button>
-                        )}
-
-                        <button 
-                            onClick={handleGenerateMindmap} 
-                            disabled={isGenerating}
-                            style={{ background: 'none', border: '1px solid #4c4a8f', color: '#4c4a8f', padding: '8px 12px', borderRadius: '10px', cursor: 'pointer', fontWeight: '500', fontSize: '12px', display: 'flex', alignItems: 'center', gap: '4px' }}
-                        >
-                            {isGenerating ? '⏳ Generating...' : '🪄 Mindmap'}
-                        </button>
-                        <button onClick={handleSave} className="btn-generate" style={{ padding: '10px 20px' }}>Save Note</button>
+                            <button 
+                                onClick={handleDownloadWord}
+                                title="Download as Word"
+                                style={{ background: 'none', border: '1px solid #0984e3', color: '#0984e3', padding: '6px 10px', borderRadius: '8px', cursor: 'pointer', fontWeight: '500', fontSize: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px' }}
+                            >
+                                📥 Word
+                            </button>
+                            {diagramJson && (
+                                <button 
+                                    onClick={handleDownloadMindmapImage}
+                                    title="Save Mindmap as Image"
+                                    style={{ background: 'none', border: '1px solid #6c5ce7', color: '#6c5ce7', padding: '6px 10px', borderRadius: '8px', cursor: 'pointer', fontWeight: '500', fontSize: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px' }}
+                                >
+                                    🖼️ Map
+                                </button>
+                            )}
+                            <button 
+                                onClick={handleGenerateMindmap} 
+                                disabled={isGenerating}
+                                style={{ background: 'none', border: '1px solid #4c4a8f', color: '#4c4a8f', padding: '6px 10px', borderRadius: '8px', cursor: 'pointer', fontWeight: '500', fontSize: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '4px' }}
+                            >
+                                {isGenerating ? '⏳...' : '🪄 Map'}
+                            </button>
+                        </div>
+                        <button onClick={handleSave} className="btn-generate" style={{ padding: '10px', width: '100%', marginTop: '4px', fontSize: '14px' }}>Save Note</button>
                     </div>
                 </div>
 

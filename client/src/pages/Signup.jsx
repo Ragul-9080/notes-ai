@@ -12,11 +12,18 @@ const Signup = () => {
     const [showOtpInput, setShowOtpInput] = useState(false);
     const { signup, verifyOtp } = useAuth();
     const navigate = useNavigate();
+    const [isMobile, setIsMobile] = React.useState(window.innerWidth < 768);
+
+    React.useEffect(() => {
+        const handleResize = () => setIsMobile(window.innerWidth < 768);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     if (!import.meta.env.VITE_SUPABASE_URL || import.meta.env.VITE_SUPABASE_URL === 'YOUR_SUPABASE_URL') {
         return (
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh', width: '100%', flex: 1, background: 'var(--bg-primary)' }}>
-                <div style={{ background: 'white', padding: '40px', borderRadius: '16px', textAlign: 'center', boxShadow: 'var(--card-shadow)' }}>
+                <div style={{ background: 'white', padding: isMobile ? '24px' : '40px', borderRadius: '16px', textAlign: 'center', boxShadow: 'var(--card-shadow)' }}>
                     <h2>⚠️ Configuration Required</h2>
                     <p>Please set your Supabase credentials in <code>.env</code> to enable signup.</p>
                 </div>
@@ -55,8 +62,8 @@ const Signup = () => {
 
     if (showOtpInput) {
         return (
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', padding: '40px 20px', width: '100%', flex: 1, background: 'var(--bg-primary)' }}>
-                <div style={{ background: 'white', padding: '48px', borderRadius: '24px', boxShadow: 'var(--card-shadow)', width: '100%', maxWidth: '400px', textAlign: 'center' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', padding: isMobile ? '20px' : '40px 20px', width: '100%', flex: 1, background: 'var(--bg-primary)' }}>
+                <div style={{ background: 'white', padding: isMobile ? '24px' : '48px', borderRadius: '24px', boxShadow: 'var(--card-shadow)', width: '100%', maxWidth: '400px', textAlign: 'center' }}>
                     <div style={{ fontSize: '64px', marginBottom: '24px' }}>🛡️</div>
                     <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '28px', marginBottom: '16px', color: 'var(--text-primary)' }}>Verify your email</h2>
                     <p style={{ color: 'var(--text-muted)', fontSize: '16px', lineHeight: '1.6', marginBottom: '32px' }}>
@@ -96,8 +103,8 @@ const Signup = () => {
     }
 
     return (
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', padding: '40px 20px', width: '100%', flex: 1, background: 'var(--bg-primary)' }}>
-            <div style={{ background: 'white', padding: '48px', borderRadius: '16px', boxShadow: 'var(--card-shadow)', width: '100%', maxWidth: '400px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', padding: isMobile ? '20px' : '40px 20px', width: '100%', flex: 1, background: 'var(--bg-primary)' }}>
+            <div style={{ background: 'white', padding: isMobile ? '24px' : '48px', borderRadius: '16px', boxShadow: 'var(--card-shadow)', width: '100%', maxWidth: '400px' }}>
                 <div className="logo" style={{ justifyContent: 'center', marginBottom: '32px' }}>📓 NoteShelf</div>
                 <h2 style={{ fontFamily: 'var(--font-heading)', textAlign: 'center', marginBottom: '8px' }}>Get Started</h2>
                 <p style={{ textAlign: 'center', color: '#888', marginBottom: '24px' }}>Create an account to start organizing</p>

@@ -6,6 +6,13 @@ const AdminLogin = () => {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+    const [isMobile, setIsMobile] = React.useState(window.innerWidth < 768);
+
+    React.useEffect(() => {
+        const handleResize = () => setIsMobile(window.innerWidth < 768);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -43,11 +50,12 @@ const AdminLogin = () => {
             alignItems: 'center', 
             justifyContent: 'center',
             background: 'var(--bg-primary)',
-            fontFamily: 'var(--font-sans)'
+            fontFamily: 'var(--font-sans)',
+            padding: isMobile ? '20px' : '0'
         }}>
             <div style={{ 
                 background: '#fff', 
-                padding: '48px', 
+                padding: isMobile ? '24px' : '48px', 
                 borderRadius: '32px', 
                 boxShadow: '0 20px 50px rgba(0,0,0,0.1)',
                 width: '100%',
