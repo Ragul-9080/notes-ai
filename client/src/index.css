@@ -902,3 +902,67 @@ body {
     padding: 12px;
   }
 }
+
+/* --- Fine-grained mobile responsiveness for specific device sizes --- */
+
+/* Large phones (up to 480px) */
+@media (max-width: 480px) {
+  .title-group h1 { font-size: 32px; }
+  .main-content { padding: 20px; }
+  .note-modal-title { font-size: 18px; }
+  .modal-overlay { padding: 12px; }
+  .note-modal-content { padding: 16px !important; }
+}
+
+/* Large phones / iPhones Pro Max (up to 414px) */
+@media (max-width: 414px) {
+  .title-group h1 { font-size: 30px; }
+  .main-content { padding: 18px; margin-top: 56px; gap: 28px; }
+  .note-card { padding: 24px; }
+}
+
+/* Modern iPhones / Standard (up to 375px) */
+@media (max-width: 375px) {
+  .title-group h1 { font-size: 28px; }
+  .title-meta { font-size: 14px; }
+  .main-content { padding: 16px; margin-top: 56px; gap: 24px; }
+  .note-card { padding: 20px; }
+  .note-title { font-size: 20px; }
+  .mobile-nav { padding: 0 16px; height: 56px; }
+  .note-modal-title { font-size: 16px; margin-bottom: 4px; }
+  .note-modal-content { padding: 14px !important; }
+  .btn-generate { padding: 10px; font-size: 14px; }
+}
+
+/* Android Large (up to 360px) */
+@media (max-width: 360px) {
+  .title-group h1 { font-size: 26px; }
+  .main-content { padding: 14px; gap: 20px; }
+  .note-textarea, .markdown-preview { min-height: 250px; }
+}
+
+/* Small phones (up to 320px) */
+@media (max-width: 320px) {
+  .title-group h1 { font-size: 22px; }
+  .main-content { padding: 10px; gap: 12px; }
+  .note-card { padding: 14px; }
+  .note-title { font-size: 16px; }
+  .btn-generate { padding: 8px 10px; font-size: 12px; }
+  .search-input { font-size: 12px; padding: 8px 10px; }
+  .filter-chip { padding: 6px 10px; font-size: 11px; }
+  .ai-modal-inner { padding: 12px; }
+  .ai-modal-style-grid { grid-template-columns: 1fr; }
+  .nav-item { padding: 10px 20px; font-size: 13px; }
+  .logo { font-size: 20px; }
+  .sidebar-header { padding: 0 20px 20px 20px; }
+  .note-textarea, .markdown-preview { min-height: 200px; }
+}
+
+/* Independent Height Adjustments for short screens */
+@media (max-height: 700px) {
+  .note-textarea, .markdown-preview { min-height: 200px; }
+}
+
+@media (max-height: 600px) {
+  .note-textarea, .markdown-preview { min-height: 150px; }
+}

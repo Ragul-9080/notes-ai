@@ -4,14 +4,22 @@ const tags = ['All', 'Important', 'Review', 'Formula', 'Definition', 'Example', 
 
 const TagFilter = ({ activeTag, onSelectTag }) => {
     return (
-        <div className="filter-tags" style={{ padding: '4px 0', overflowX: 'auto', whiteSpace: 'nowrap' }}>
+        <div className="filter-tags" style={{ 
+            padding: '12px 4px', 
+            overflowX: 'auto', 
+            overflowY: 'hidden',
+            display: 'flex', 
+            flexWrap: 'nowrap', 
+            gap: '8px',
+            WebkitOverflowScrolling: 'touch'
+        }}>
             {tags.map((tag) => (
                 <button
                     key={tag}
                     className={`filter-chip ${activeTag === tag ? 'active' : ''}`}
                     onClick={() => onSelectTag(tag)}
                     style={{ 
-                        marginRight: '8px',
+                        flexShrink: 0,
                         border: activeTag === tag ? 'none' : '1px solid var(--card-border)',
                         boxShadow: activeTag === tag ? '0 4px 12px rgba(0,0,0,0.1)' : 'none'
                     }}
