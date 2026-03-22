@@ -110,11 +110,9 @@ const NoteModal = ({ note, isOpen, onClose, onSave, onDelete }) => {
         } catch (error) {
             console.error('Mindmap Generation Error:', error);
             if (error.response?.data?.code === 'LIMIT_REACHED') {
-                if (window.confirm(`${error.response.data.error}\n\nWould you like to upgrade to Pro for unlimited mindmaps?`)) {
-                    navigate('/pricing');
-                    onClose();
-                }
-            } else {
+                alert(`${error.response.data.error}\n\nPlease contact the administrator to activate Pro access.`);
+            }
+ else {
                 alert('Failed to generate mindmap from note.');
             }
         } finally {

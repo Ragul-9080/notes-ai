@@ -301,7 +301,7 @@ const LandingPage = () => {
                             <li>✨ Priority Support</li>
                             <li>✨ Ad-Free</li>
                         </ul>
-                        <button onClick={() => navigate('/signup')} style={{ width: '100%', padding: '12px', borderRadius: '8px', border: 'none', background: '#4c4a8f', color: 'white', fontWeight: '600', cursor: 'pointer' }}>Go Pro Now</button>
+                        <button onClick={() => alert('Please contact the administrator to activate Pro access.')} style={{ width: '100%', padding: '12px', borderRadius: '8px', border: 'none', background: '#4c4a8f', color: 'white', fontWeight: '600', cursor: 'pointer' }}>Contact Admin to Go Pro</button>
                     </div>
                 </div>
             </section>

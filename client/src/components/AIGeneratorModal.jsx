@@ -60,11 +60,9 @@ const AIGeneratorModal = ({ isOpen, onClose, onGenerated }) => {
         } catch (error) {
             console.error('Generation Error:', error);
             if (error.response?.data?.code === 'LIMIT_REACHED') {
-                if (window.confirm(`${error.response.data.error}\n\nWould you like to upgrade to Pro for unlimited access?`)) {
-                    navigate('/pricing');
-                    onClose();
-                }
-            } else {
+                alert(`${error.response.data.error}\n\nPlease contact the administrator to activate Pro access.`);
+            }
+ else {
                 const errorMsg = error.response?.data?.error || error.message || 'Unknown error';
                 alert(`Generation failed: ${errorMsg}`);
             }
@@ -83,27 +81,21 @@ const AIGeneratorModal = ({ isOpen, onClose, onGenerated }) => {
     return (
         <div className="modal-overlay" onClick={onClose}>
             <div className="modal-content" onClick={(e) => e.stopPropagation()} style={{ padding: '0' }}>
-                <div style={{ padding: '32px' }}>
+                <div className="ai-modal-inner">
                     <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
                         <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '28px', color: '#4c4a8f' }}>✨ AI Note Generator</h2>
                         <button onClick={onClose} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '20px' }}>✕</button>
                     </div>
                     <p style={{ color: '#888', marginBottom: '24px' }}>Generate notes from a topic, URL, or pasted text</p>
-
-                    <div style={{ display: 'flex', gap: '24px', borderBottom: '1px solid #eee', marginBottom: '32px' }}>
+ 
+                    <div className="ai-modal-tabs">
                         {tabs.map(tab => (
                             <button
                                 key={tab.id}
                                 onClick={() => setActiveTab(tab.id)}
+                                className="ai-modal-tab-btn"
                                 style={{
-                                    padding: '12px 16px',
-                                    background: 'none',
-                                    border: 'none',
                                     borderBottom: activeTab === tab.id ? '2px solid #4c4a8f' : '2px solid transparent',
-                                    cursor: 'pointer',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    gap: '8px',
                                     fontWeight: activeTab === tab.id ? '600' : '400',
                                     color: activeTab === tab.id ? '#4c4a8f' : '#666'
                                 }}
@@ -112,30 +104,28 @@ const AIGeneratorModal = ({ isOpen, onClose, onGenerated }) => {
                             </button>
                         ))}
                     </div>
-
-                    <div style={{ display: 'flex', gap: '32px', marginBottom: '32px' }}>
-                        <div style={{ flex: 1 }}>
-                            <label style={{ fontSize: '12px', fontWeight: '600', color: '#666', display: 'block', marginBottom: '8px' }}>NOTE STYLE</label>
-                            <div style={{ display: 'flex', gap: '8px' }}>
-                                {['Structured', 'Bullets', 'Summary', 'Mindmap'].map(s => (
-                                    <button
-                                        key={s}
-                                        onClick={() => setStyle(s)}
-                                        style={{
-                                            flex: 1,
-                                            padding: '10px',
-                                            borderRadius: '8px',
-                                            border: '1px solid #ddd',
-                                            background: style === s ? '#4c4a8f' : 'white',
-                                            color: style === s ? 'white' : '#666',
-                                            fontSize: '13px',
-                                            cursor: 'pointer'
-                                        }}
-                                    >
-                                        {s}
-                                    </button>
-                                ))}
-                            </div>
+ 
+                    <div style={{ marginBottom: '32px' }}>
+                        <label style={{ fontSize: '12px', fontWeight: '600', color: '#666', display: 'block', marginBottom: '8px' }}>NOTE STYLE</label>
+                        <div className="ai-modal-style-grid">
+                            {['Structured', 'Bullets', 'Summary', 'Mindmap'].map(s => (
+                                <button
+                                    key={s}
+                                    onClick={() => setStyle(s)}
+                                    style={{
+                                        width: '100%',
+                                        padding: '10px',
+                                        borderRadius: '8px',
+                                        border: '1px solid #ddd',
+                                        background: style === s ? '#4c4a8f' : 'white',
+                                        color: style === s ? 'white' : '#666',
+                                        fontSize: '13px',
+                                        cursor: 'pointer'
+                                    }}
+                                >
+                                    {s}
+                                </button>
+                            ))}
                         </div>
                     </div>
 
@@ -196,7 +186,7 @@ const AIGeneratorModal = ({ isOpen, onClose, onGenerated }) => {
                                     onClick={() => { navigate('/pricing'); onClose(); }}
                                     style={{ background: 'none', border: 'none', color: '#4c4a8f', fontWeight: '600', cursor: 'pointer', textDecoration: 'underline' }}
                                 >
-                                    Upgrade to Pro for Unlimited
+                                    Contact Admin for Unlimited Access
                                 </button>
                             </div>
                         </div>

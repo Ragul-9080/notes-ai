@@ -8,8 +8,9 @@ const Signup = () => {
     const [fullName, setFullName] = useState('');
     const [phone, setPhone] = useState('');
     const [error, setError] = useState(null);
-    const [isSuccess, setIsSuccess] = useState(false);
-    const { signup } = useAuth();
+    const [otp, setOtp] = useState('');
+    const [showOtpInput, setShowOtpInput] = useState(false);
+    const { signup, verifyOtp } = useAuth();
     const navigate = useNavigate();
 
     if (!import.meta.env.VITE_SUPABASE_URL || import.meta.env.VITE_SUPABASE_URL === 'YOUR_SUPABASE_URL') {
@@ -35,25 +36,59 @@ const Signup = () => {
         if (error) {
             setError(error.message);
         } else {
-            setIsSuccess(true);
+            setShowOtpInput(true);
         }
     };
 
-    if (isSuccess) {
+    const handleVerifyOtp = async (e) => {
+        e.preventDefault();
+        setError(null);
+        
+        const { error } = await verifyOtp(email, otp, password);
+
+        if (error) {
+            setError(error.message);
+        } else {
+            navigate('/dashboard');
+        }
+    };
+
+    if (showOtpInput) {
         return (
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', padding: '40px 20px', width: '100%', flex: 1, background: 'var(--bg-primary)' }}>
                 <div style={{ background: 'white', padding: '48px', borderRadius: '24px', boxShadow: 'var(--card-shadow)', width: '100%', maxWidth: '400px', textAlign: 'center' }}>
-                    <div style={{ fontSize: '64px', marginBottom: '24px' }}>✉️</div>
-                    <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '28px', marginBottom: '16px', color: 'var(--text-primary)' }}>Check your email</h2>
+                    <div style={{ fontSize: '64px', marginBottom: '24px' }}>🛡️</div>
+                    <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '28px', marginBottom: '16px', color: 'var(--text-primary)' }}>Verify your email</h2>
                     <p style={{ color: 'var(--text-muted)', fontSize: '16px', lineHeight: '1.6', marginBottom: '32px' }}>
-                        We've sent a verification link to <strong>{email}</strong>. Please click the link to activate your account.
+                        We've sent a 6-digit verification code to <strong>{email}</strong>.
                     </p>
+
+                    {error && <div style={{ color: '#ff6b6b', background: '#fff5f5', padding: '12px', borderRadius: '8px', marginBottom: '20px', fontSize: '14px' }}>{error}</div>}
+
+                    <form onSubmit={handleVerifyOtp} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                        <div>
+                            <label style={{ fontSize: '11px', fontWeight: '700', color: '#666', display: 'block', marginBottom: '6px', letterSpacing: '0.5px' }}>ENTER VERIFICATION CODE</label>
+                            <input
+                                type="text"
+                                className="search-input"
+                                style={{ width: '100%', textAlign: 'center', fontSize: '24px', letterSpacing: '8px', fontWeight: 'bold' }}
+                                value={otp}
+                                onChange={(e) => setOtp(e.target.value)}
+                                placeholder="000000"
+                                maxLength={6}
+                                required
+                            />
+                        </div>
+                        <button type="submit" className="btn-generate" style={{ width: '100%' }}>
+                            Verify & Continue
+                        </button>
+                    </form>
+
                     <button 
-                        onClick={() => navigate('/login')}
-                        className="btn-generate"
-                        style={{ width: '100%' }}
+                        onClick={() => setShowOtpInput(false)}
+                        style={{ background: 'none', border: 'none', color: '#4c4a8f', marginTop: '24px', fontWeight: '600', cursor: 'pointer', fontSize: '14px' }}
                     >
-                        Back to Login
+                        Change Email Address
                     </button>
                 </div>
             </div>

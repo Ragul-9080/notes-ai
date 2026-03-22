@@ -28,22 +28,8 @@ const SubscriptionView = ({ isEmbedded = false }) => {
         fetchStatus();
     }, [user]);
 
-    const handleUpgrade = async () => {
-        if (!user) {
-            navigate('/signup');
-            return;
-        }
-        setUpgrading(true);
-        try {
-            await api.post('/subscription/upgrade');
-            setSubscription(prev => ({ ...prev, plan: 'pro' }));
-            alert('🎉 Congratulations! You are now a Pro user.');
-        } catch (error) {
-            console.error('Upgrade Error:', error);
-            alert('Failed to upgrade. Please try again.');
-        } finally {
-            setUpgrading(false);
-        }
+    const handleUpgrade = () => {
+        alert('Please contact the administrator to activate Pro access.');
     };
 
     if (loading) return <div style={{ padding: '40px', textAlign: 'center' }}>Loading status...</div>;
@@ -260,7 +246,7 @@ const SubscriptionView = ({ isEmbedded = false }) => {
                             boxShadow: currentPlan === 'pro' ? 'none' : '0 12px 24px rgba(99, 102, 241, 0.4)'
                         }}
                     >
-                        {upgrading ? 'Syncing...' : currentPlan === 'pro' ? 'Current Active Plan' : 'Upgrade to Pro'}
+                        {currentPlan === 'pro' ? 'Current Active Plan' : 'Contact Admin to Activate Pro'}
                     </button>
                 </div>
             </div>

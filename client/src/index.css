@@ -533,7 +533,11 @@ body {
   padding: 4px;
   border-radius: 8px;
   gap: 4px;
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: none; /* Firefox */
 }
+.view-toggle::-webkit-scrollbar { display: none; } /* Safari and Chrome */
 
 .view-toggle button {
   padding: 6px 16px;
@@ -625,8 +629,23 @@ body {
 
   .note-modal-footer .btn-group {
     width: 100%;
-    justify-content: space-between;
+    justify-content: flex-start;
     display: flex;
+    gap: 8px;
+  }
+
+  .voice-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .voice-language-select {
+    width: 100%;
+  }
+
+  .voice-generate-btn {
+    width: 100%;
+    justify-content: center;
   }
 }
 
@@ -719,6 +738,35 @@ body {
     font-size: 36px;
   }
 
+  .profile-container {
+    padding: 24px 16px !important;
+  }
+
+  .profile-section {
+    padding: 20px !important;
+  }
+
+  .profile-header {
+    flex-direction: column;
+    align-items: flex-start !important;
+    gap: 16px !important;
+  }
+
+  .profile-stats {
+    flex-direction: column;
+    align-items: flex-start !important;
+    gap: 12px !important;
+    text-align: left !important;
+  }
+
+  .profile-actions {
+    flex-direction: column;
+  }
+
+  .profile-actions button {
+    width: 100%;
+  }
+
   .search-container {
     width: 100%;
   }
@@ -779,4 +827,60 @@ body {
 
 .mobile-overlay.visible {
   display: block;
+}
+
+/* AI Generator Modal Responsive Styles */
+.ai-modal-inner {
+  padding: 32px;
+}
+
+.ai-modal-tabs {
+  display: flex;
+  gap: 16px;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 32px;
+  overflow-x: auto;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+}
+
+.ai-modal-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.ai-modal-tab-btn {
+  padding: 12px 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.ai-modal-style-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+@media (max-width: 600px) {
+  .ai-modal-inner {
+    padding: 20px;
+  }
+  
+  .ai-modal-tabs {
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+
+  .ai-modal-style-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .btn-generate {
+    padding: 12px;
+  }
 }

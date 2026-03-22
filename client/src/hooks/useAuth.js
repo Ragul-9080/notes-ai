@@ -32,14 +32,43 @@ export const useAuth = () => {
     };
 
     const signup = async (email, password, data = {}) => {
-        if (!supabase) return { error: { message: 'Supabase client not initialized. Check your credentials in .env' } };
-        return supabase.auth.signUp({ 
-            email, 
-            password,
-            options: {
-                data: data
-            }
-        });
+        try {
+            const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/auth/signup`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ 
+                    email, 
+                    password, 
+                    fullName: data.full_name, 
+                    phone: data.phone 
+                }),
+            });
+            const result = await response.json();
+            if (!response.ok) throw new Error(result.error || 'Signup failed');
+            return { data: result, error: null };
+        } catch (error) {
+            return { data: null, error };
+        }
+    };
+
+    const verifyOtp = async (email, token, password) => {
+        try {
+            const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:5000/api'}/auth/verify`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, token }),
+            });
+            const result = await response.json();
+            if (!response.ok) throw new Error(result.error || 'Verification failed');
+            
+            // After successful server-side verification, automatically sign in the user
+            const authResult = await supabase.auth.signInWithPassword({ email, password });
+            if (authResult.error) throw authResult.error;
+
+            return { data: authResult.data, error: null };
+        } catch (error) {
+            return { data: null, error };
+        }
     };
 
     const logout = async () => {
@@ -47,5 +76,5 @@ export const useAuth = () => {
         return supabase.auth.signOut();
     };
 
-    return { user, loading, login, signup, logout };
+    return { user, loading, login, signup, logout, verifyOtp };
 };

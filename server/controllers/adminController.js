@@ -22,10 +22,14 @@ export const adminLogin = async (req, res) => {
 export const listAllUsers = async (req, res) => {
     try {
         // Fetch users from auth and join with profiles
-        // Note: listUsers() returns an array with a `users` property
-        const { data: { users }, error: authError } = await supabaseAdmin.auth.admin.listUsers();
+        const { data, error: authError } = await supabaseAdmin.auth.admin.listUsers();
         
-        if (authError) throw authError;
+        if (authError) {
+            console.error('Supabase Auth List Users Error:', authError);
+            throw authError;
+        }
+
+        const users = data?.users || [];
 
         const { data: profiles, error: profileError } = await supabaseAdmin
             .from('profiles')
@@ -104,10 +108,20 @@ export const deleteUser = async (req, res) => {
     }
 
     try {
-        // 1. Delete user from Supabase Auth (this also takes care of cascade if configured, 
-        // but we'll manually handle profiles to be safe)
-        const { error: authError } = await supabaseAdmin.auth.admin.deleteUser(userId);
-        if (authError) throw authError;
+        console.log(`Starting manual deletion for user: ${userId}`);
+
+        // 1. Delete all user notes first
+        const { error: notesError } = await supabaseAdmin
+            .from('notes')
+            .delete()
+            .eq('user_id', userId);
+        
+        if (notesError) {
+            console.warn('Notes deletion failed or returned error:', notesError);
+            // We continue as notes might not exist or might fail for other reasons
+        } else {
+            console.log(`Successfully deleted notes for user: ${userId}`);
+        }
 
         // 2. Delete from profiles table
         const { error: profileError } = await supabaseAdmin
@@ -115,13 +129,24 @@ export const deleteUser = async (req, res) => {
             .delete()
             .eq('id', userId);
         
-        // Note: We don't throw for profileError if the user was deleted from Auth successfully,
-        // but it's good to log it.
-        if (profileError) console.warn('Profile deletion failed for user:', userId, profileError);
+        if (profileError) {
+            console.warn('Profile deletion failed for user:', userId, profileError);
+        } else {
+            console.log(`Successfully deleted profile for user: ${userId}`);
+        }
 
-        res.json({ success: true, message: 'User deleted successfully' });
+        // 3. Finally, delete user from Supabase Auth
+        const { error: authError } = await supabaseAdmin.auth.admin.deleteUser(userId);
+        
+        if (authError) {
+            console.error('Auth deletion failed:', authError);
+            throw authError;
+        }
+
+        console.log(`Successfully deleted auth user: ${userId}`);
+        res.json({ success: true, message: 'User and all related data deleted successfully' });
     } catch (error) {
         console.error('Admin Delete User Error:', error);
-        res.status(500).json({ success: false, error: 'Failed to delete user' });
+        res.status(500).json({ success: false, error: 'Failed to delete user: ' + (error.message || 'Internal Server Error') });
     }
 };

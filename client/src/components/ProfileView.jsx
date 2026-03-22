@@ -35,14 +35,14 @@ const ProfileView = () => {
     if (loading) return <div style={{ padding: '40px', textAlign: 'center' }}>Loading profile...</div>;
 
     return (
-        <div style={{ maxWidth: '800px', margin: '0 auto', padding: '40px 20px' }}>
+        <div style={{ maxWidth: '800px', margin: '0 auto' }} className="profile-container">
             <h1 style={{ fontSize: '32px', fontFamily: 'var(--font-heading)', color: 'var(--text-primary)', marginBottom: '32px' }}>User Profile</h1>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
                 {/* Account Details */}
-                <div style={{ background: 'white', padding: '32px', borderRadius: '24px', boxShadow: 'var(--card-shadow)', border: '1px solid #eee' }}>
+                <div style={{ background: 'white', borderRadius: '24px', boxShadow: 'var(--card-shadow)', border: '1px solid #eee' }} className="profile-section">
                     <h2 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '24px', color: '#666', letterSpacing: '0.5px' }}>ACCOUNT DETAILS</h2>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '20px', marginBottom: '32px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '20px', marginBottom: '32px' }} className="profile-header">
                         <div style={{ 
                             width: '80px', 
                             height: '80px', 
@@ -54,7 +54,8 @@ const ProfileView = () => {
                             justifyContent: 'center', 
                             fontSize: '32px', 
                             fontWeight: '700',
-                            boxShadow: '0 10px 25px var(--accent-indigo-glow)'
+                            boxShadow: '0 10px 25px var(--accent-indigo-glow)',
+                            flexShrink: 0
                         }}>
                             {user?.email?.charAt(0).toUpperCase()}
                         </div>
@@ -89,7 +90,7 @@ const ProfileView = () => {
                                 {user?.phone || user?.user_metadata?.phone || 'Not Linked'}
                             </div>
                         </div>
-                        <div style={{ gridColumn: 'span 2' }}>
+                        <div style={{ gridColumn: isMobile ? 'span 1' : 'span 2' }}>
                             <label style={{ fontSize: '11px', fontWeight: '700', color: '#999', display: 'block', marginBottom: '8px', letterSpacing: '0.5px' }}>EMAIL ADDRESS</label>
                             <div style={{ padding: '12px', background: '#fcfcfc', border: '1px solid #eee', borderRadius: '10px', fontSize: '14px', color: 'var(--text-primary)' }}>
                                 {user?.email}
@@ -98,15 +99,15 @@ const ProfileView = () => {
                     </div>
                 </div>
 
-                {/* Login Info (requested as separate section) */}
-                <div style={{ background: 'white', padding: '32px', borderRadius: '24px', boxShadow: 'var(--card-shadow)', border: '1px solid #eee' }}>
+                {/* Login Info */}
+                <div style={{ background: 'white', borderRadius: '24px', boxShadow: 'var(--card-shadow)', border: '1px solid #eee' }} className="profile-section">
                     <h2 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '24px', color: '#666', letterSpacing: '0.5px' }}>LOGIN DETAILS</h2>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '12px', borderBottom: '1px solid #f5f5f5' }}>
                             <span style={{ fontSize: '14px', color: '#777' }}>Login Method</span>
                             <span style={{ fontSize: '14px', fontWeight: '600' }}>Email/Password</span>
                         </div>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '12px', borderBottom: '1px solid #f5f5f5' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '12px', borderBottom: '1px solid #f5f5f5' }} className="profile-stats">
                             <span style={{ fontSize: '14px', color: '#777' }}>Last Sign In</span>
                             <span style={{ fontSize: '14px', fontWeight: '600' }}>{new Date(user?.last_sign_in_at).toLocaleString()}</span>
                         </div>
@@ -114,9 +115,9 @@ const ProfileView = () => {
                 </div>
 
                 {/* Subscription Status */}
-                <div style={{ background: 'white', padding: '32px', borderRadius: '24px', boxShadow: 'var(--card-shadow)', border: '1px solid #eee' }}>
+                <div style={{ background: 'white', borderRadius: '24px', boxShadow: 'var(--card-shadow)', border: '1px solid #eee' }} className="profile-section">
                     <h2 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '24px', color: '#666', letterSpacing: '0.5px' }}>SUBSCRIPTION</h2>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }} className="profile-stats">
                         <div>
                             <span style={{ 
                                 padding: '6px 16px', 
@@ -129,7 +130,7 @@ const ProfileView = () => {
                                 {subscription?.plan === 'pro' ? '🚀 PRO PLAN' : '🆓 FREE PLAN'}
                             </span>
                         </div>
-                        <div style={{ textAlign: 'right' }}>
+                        <div style={{ textAlign: 'right' }} className="profile-stats">
                             <p style={{ margin: 0, fontSize: '14px', color: '#888' }}>Usage this month</p>
                             <p style={{ margin: '4px 0 0 0', fontSize: '18px', fontWeight: '700', color: 'var(--text-primary)' }}>
                                 {subscription?.ai_usage_count || 0}/10 AI Notes
@@ -142,7 +143,7 @@ const ProfileView = () => {
                 </div>
 
                 {/* Actions */}
-                <div style={{ display: 'flex', gap: '16px' }}>
+                <div style={{ display: 'flex', gap: '16px' }} className="profile-actions">
                     <button 
                         onClick={logout}
                         style={{ 
@@ -155,7 +156,8 @@ const ProfileView = () => {
                             cursor: 'pointer',
                             display: 'flex',
                             alignItems: 'center',
-                            gap: '8px'
+                            gap: '8px',
+                            justifyContent: 'center'
                         }}
                     >
                         🚪 Sign Out
