@@ -150,3 +150,46 @@ export const deleteUser = async (req, res) => {
         res.status(500).json({ success: false, error: 'Failed to delete user: ' + (error.message || 'Internal Server Error') });
     }
 };
+
+export const getSettings = async (req, res) => {
+    try {
+        const { data, error } = await supabaseAdmin
+            .from('settings')
+            .select('*');
+
+        if (error) throw error;
+
+        // Convert array to object for easier handling
+        const settings = data.reduce((acc, curr) => {
+            acc[curr.key] = curr.value;
+            return acc;
+        }, {});
+
+        res.json({ success: true, settings });
+    } catch (error) {
+        console.error('Admin Get Settings Error:', error);
+        res.status(500).json({ success: false, error: 'Failed to fetch settings' });
+    }
+};
+
+export const updateSettings = async (req, res) => {
+    const { key, value } = req.body;
+
+    if (!key || value === undefined) {
+        return res.status(400).json({ error: 'Missing key or value' });
+    }
+
+    try {
+        // Upsert setting
+        const { error } = await supabaseAdmin
+            .from('settings')
+            .upsert({ key, value }, { onConflict: 'key' });
+
+        if (error) throw error;
+
+        res.json({ success: true, message: `Setting ${key} updated successfully` });
+    } catch (error) {
+        console.error('Admin Update Settings Error:', error);
+        res.status(500).json({ success: false, error: 'Failed to update settings' });
+    }
+};
